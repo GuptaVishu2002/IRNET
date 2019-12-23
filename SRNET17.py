@@ -8,6 +8,7 @@ from tensorflow.keras.models import Model
 from tensorflow.keras.layers import Input
 from tensorflow.keras.layers import BatchNormalization
 from tensorflow.keras.layers import Activation
+from tensorflow.keras.layers import concatenate
 from collections import Counter
 from tensorflow.keras.layers import Input
 import re, os, csv, math, operator
@@ -89,7 +90,7 @@ num_input1 = new_x_train.shape[1]
 
 in_layer = Input(shape=(86,))
 
-layer_1 = Dense(1024)(visible)
+layer_1 = Dense(1024)(in_layer)
 layer_1 = BatchNormalization()(layer_1)
 layer_1 = Activation('relu')(layer_1)
 
@@ -173,9 +174,11 @@ model = Model(inputs=in_layer, outputs=out_layer)
 adam = optimizers.Adam(lr=0.0001)
 model.compile(loss=tf.keras.losses.mean_absolute_error, optimizer=adam, metrics=['mean_absolute_error'])
 
-es = EarlyStopping(monitor='val_loss', mode='min', verbose=1, patience=50)
+es = EarlyStopping(monitor='val_loss', mode='min', verbose=1, patience=100)
 # Fit the model
 model.fit(new_x_train, new_y_train,verbose=2, validation_data=(new_x_test, new_y_test), epochs=1000, batch_size=32, callbacks=[es])
 y_predict = model.predict(new_x_test)
-print(y_predict)
-model.save_weights("model2.h5")
+f = open( 'resultSR17.txt', 'w' )
+f.write(y_predict)
+f.close()
+model.save_weights("modelSR17.h5")

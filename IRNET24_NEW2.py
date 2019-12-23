@@ -9,6 +9,7 @@ from tensorflow.keras.layers import Input
 from tensorflow.keras.layers import BatchNormalization
 from tensorflow.keras.layers import Activation
 from tensorflow.keras.layers import concatenate
+from tensorflow.keras.layers import add
 from collections import Counter
 from tensorflow.keras.layers import Input
 import re, os, csv, math, operator
@@ -94,99 +95,141 @@ layer_1 = Dense(1024)(in_layer)
 layer_1 = BatchNormalization()(layer_1)
 layer_1 = Activation('relu')(layer_1)
 
-gsk_1 = concatenate([in_layer, layer_1])
+#gsk_1 = concatenate([in_layer, layer_1])
 
-layer_2 = Dense(1024)(gsk_1)
+layer_2 = Dense(1024)(layer_1)
 layer_2 = BatchNormalization()(layer_2)
 layer_2 = Activation('relu')(layer_2)
 
-gsk_2 = concatenate([gsk_1, layer_2])
+gsk_2 = add([layer_1, layer_2])
 
 layer_3 = Dense(1024)(gsk_2)
 layer_3 = BatchNormalization()(layer_3)
 layer_3 = Activation('relu')(layer_3)
 
-gsk_3 = concatenate([gsk_2, layer_3])
+gsk_3 = add([gsk_2, layer_3])
 
 layer_4 = Dense(1024)(gsk_3)
 layer_4 = BatchNormalization()(layer_4)
 layer_4 = Activation('relu')(layer_4)
 
-gsk_4 = concatenate([gsk_3, layer_4])
+gsk_4 = add([gsk_3, layer_4])
 
 layer_5 = Dense(512)(gsk_4)
 layer_5 = BatchNormalization()(layer_5)
 layer_5 = Activation('relu')(layer_5)
 
-gsk_5 = concatenate([gsk_4, layer_5])
+#gsk_5 = concatenate([gsk_4, layer_5])
 
-layer_6 = Dense(512)(gsk_5)
+layer_6 = Dense(512)(layer_5)
 layer_6 = BatchNormalization()(layer_6)
 layer_6 = Activation('relu')(layer_6)
 
-gsk_6 = concatenate([gsk_5, layer_6])
+gsk_6 = add([layer_5, layer_6])
 
 layer_7 = Dense(512)(gsk_6)
 layer_7 = BatchNormalization()(layer_7)
 layer_7 = Activation('relu')(layer_7)
 
-gsk_7 = concatenate([gsk_6, layer_7])
+gsk_7 = add([gsk_6, layer_7])
 
-layer_8 = Dense(256)(gsk_7)
+layer_8 = Dense(512)(gsk_7)
 layer_8 = BatchNormalization()(layer_8)
 layer_8 = Activation('relu')(layer_8)
 
-gsk_8 = concatenate([gsk_7, layer_8])
+gsk_8 = add([gsk_7, layer_8])
 
 layer_9 = Dense(256)(gsk_8)
 layer_9 = BatchNormalization()(layer_9)
 layer_9 = Activation('relu')(layer_9)
 
-gsk_9 = concatenate([gsk_8, layer_9])
+#gsk_9 = concatenate([gsk_8, layer_9])
 
-layer_10 = Dense(256)(gsk_9)
+layer_10 = Dense(256)(layer_9)
 layer_10 = BatchNormalization()(layer_10)
 layer_10 = Activation('relu')(layer_10)
 
-gsk_10 = concatenate([gsk_9, layer_10])
+gsk_10 = add([layer_9, layer_10])
 
-layer_11 = Dense(128)(gsk_10)
+layer_11 = Dense(256)(gsk_10)
 layer_11 = BatchNormalization()(layer_11)
 layer_11 = Activation('relu')(layer_11)
 
-gsk_11 = concatenate([gsk_10, layer_11])
+gsk_11 = add([gsk_10, layer_11])
 
-layer_12 = Dense(128)(gsk_11)
+layer_12 = Dense(256)(gsk_11)
 layer_12 = BatchNormalization()(layer_12)
 layer_12 = Activation('relu')(layer_12)
 
-gsk_12 = concatenate([gsk_11, layer_12])
+gsk_12 = add([gsk_11, layer_12])
 
 layer_13 = Dense(128)(gsk_12)
 layer_13 = BatchNormalization()(layer_13)
 layer_13 = Activation('relu')(layer_13)
 
-gsk_13 = concatenate([gsk_12, layer_13])
+#gsk_13 = concatenate([gsk_12, layer_13])
 
-layer_14 = Dense(64)(gsk_13)
+layer_14 = Dense(128)(layer_13)
 layer_14 = BatchNormalization()(layer_14)
 layer_14 = Activation('relu')(layer_14)
 
-gsk_14 = concatenate([gsk_13, layer_14])
+gsk_14 = add([layer_13, layer_14])
 
-layer_15 = Dense(64)(gsk_14)
+layer_15 = Dense(128)(gsk_14)
 layer_15 = BatchNormalization()(layer_15)
 layer_15 = Activation('relu')(layer_15)
 
-gsk_15 = concatenate([gsk_14, layer_15])
+gsk_15 = add([gsk_14, layer_15])
 
-layer_16 = Dense(32)(gsk_15)
+layer_16 = Dense(128)(gsk_15)
 layer_16 = BatchNormalization()(layer_16)
 layer_16 = Activation('relu')(layer_16)
 
-gsk_16 = concatenate([gsk_15, layer_16])
+gsk_16 = add([gsk_15, layer_16])
 
-out_layer = Dense(1)(gsk_16)
+layer_17 = Dense(64)(gsk_16)
+layer_17 = BatchNormalization()(layer_17)
+layer_17 = Activation('relu')(layer_17)
+
+#gsk_17 = concatenate([gsk_16, layer_17])
+
+layer_18 = Dense(64)(layer_17)
+layer_18 = BatchNormalization()(layer_18)
+layer_18 = Activation('relu')(layer_18)
+
+gsk_18 = add([layer_17, layer_18])
+
+layer_19 = Dense(64)(gsk_18)
+layer_19 = BatchNormalization()(layer_19)
+layer_19 = Activation('relu')(layer_19)
+
+gsk_19 = add([gsk_18, layer_19])
+
+layer_20 = Dense(32)(gsk_19)
+layer_20 = BatchNormalization()(layer_20)
+layer_20 = Activation('relu')(layer_20)
+
+#gsk_20 = concatenate([gsk_19, layer_20])
+
+layer_21 = Dense(32)(layer_20)
+layer_21 = BatchNormalization()(layer_21)
+layer_21 = Activation('relu')(layer_21)
+
+gsk_21 = add([layer_20, layer_21])
+
+layer_22 = Dense(16)(gsk_21)
+layer_22 = BatchNormalization()(layer_22)
+layer_22 = Activation('relu')(layer_22)
+
+#gsk_22 = concatenate([gsk_21, layer_22])
+
+layer_23 = Dense(16)(layer_22)
+layer_23 = BatchNormalization()(layer_23)
+layer_23 = Activation('relu')(layer_23)
+
+gsk_23 = add([layer_22, layer_23])
+
+out_layer = Dense(1)(gsk_23)
 
 model = Model(inputs=in_layer, outputs=out_layer)
 
@@ -194,11 +237,11 @@ model = Model(inputs=in_layer, outputs=out_layer)
 adam = optimizers.Adam(lr=0.0001)
 model.compile(loss=tf.keras.losses.mean_absolute_error, optimizer=adam, metrics=['mean_absolute_error'])
 
-es = EarlyStopping(monitor='val_loss', mode='min', verbose=1, patience=50)
+es = EarlyStopping(monitor='val_loss', mode='min', verbose=1, patience=100)
 # Fit the model
 model.fit(new_x_train, new_y_train,verbose=2, validation_data=(new_x_test, new_y_test), epochs=1000, batch_size=32, callbacks=[es])
 y_predict = model.predict(new_x_test)
-f = open( 'resultIR17.txt', 'w' )
+f = open( 'resultIR24.txt', 'w' )
 f.write(y_predict)
 f.close()
-model.save_weights("modelIR17.h5")
+model.save_weights("modelIR24.h5")
